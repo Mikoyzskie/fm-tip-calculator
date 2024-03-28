@@ -7,8 +7,8 @@ const percents = ["5%", "10%", "15%", "25%", "50%"]
 
 export default function Home() {
   return (
-    <main className="min-h-screen h-full px-0 sm:px-5">
-      <div className="flex items-center h-full">
+    <main className="min-h-screen h-full px-0 sm:px-5 flex flex-col items-center justify-center">
+      <div className="flex items-center h-full grow md:grow-0 md:mb-[87.86px]">
         <Image
           src={"/logo.svg"}
           alt="logo"
@@ -17,7 +17,7 @@ export default function Home() {
           className="mx-auto"
         />
       </div>
-      <div className="bg-white rounded-t-[25px] md:rounded-b-[25px] shadow-2xl grow p-8 max-w-[920px] md:max-h-[481px] w-full mx-auto flex">
+      <div className="bg-white rounded-t-[25px] md:rounded-b-[25px] shadow-2xl p-8 max-w-[920px] md:max-h-[481px] w-full mx-auto flex">
 
         <div className="flex flex-col md:flex-row gap-8 md:gap-12 h-fit">
           <div className="flex flex-col gap-8 justify-between basis-1/2">
@@ -59,7 +59,7 @@ export default function Home() {
               </div>
             </div>
           </div>
-          <div className="bg-[#00474B] text-white p-6 pt-[37px] md:p-10 rounded-[15px] flex flex-col gap-8 md:justify-between md:basis-1/2 h-fit">
+          <div className="bg-[#00474B] text-white p-6 pt-[37px] md:p-10 rounded-[15px] flex flex-col gap-8 md:justify-between md:basis-1/2 ">
             <div className="flex flex-col gap-[22px] md:gap-[41px]">
               <div className="flex justify-between items-center">
                 <div>
