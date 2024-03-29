@@ -8,11 +8,11 @@ const percents = ["5%", "10%", "15%", "25%", "50%"]
 
 
 export default function Home() {
-  const [custom, setCustom] = useState(0)
-  const [bill, setBill] = useState(0)
-  const [person, setPerson] = useState(0)
-  const[tipAmount, setTipAmount] = useState(0)
-  const[perPerson, setPerPerson] = useState(0)
+  const [custom, setCustom] = useState<number>(0)
+  const [bill, setBill] = useState<number>(0)
+  const [person, setPerson] = useState<number>(0)
+  const[tipAmount, setTipAmount] = useState<number>(0)
+  const[perPerson, setPerPerson] = useState<number>(0)
   function handleCustomChange(e:any){
     const customInput = e.target.value
     setCustom(customInput)
@@ -28,10 +28,13 @@ export default function Home() {
 
   useEffect(()=>{
     if(custom && bill && person){
-      const tipAmount = bill * (custom / 100)
+      const tip = custom / 100      
+      const tipAmount = bill * tip
       const tipDistribute = tipAmount / person
+      const total = parseFloat(bill) + parseFloat(tipAmount)
+      const totalDistributed = total / person
       setTipAmount(Math.floor(tipDistribute * 100) / 100)
-
+      setPerPerson(Math.floor(total * 100) / 100)
     }
 
   },[custom,bill,person])
@@ -102,7 +105,7 @@ export default function Home() {
                   <p>Total</p>
                   <p className="text-[13px] text-[#7F9D9F]">/ person</p>
                 </div>
-                <p className="text-[32px] md:text-5xl text-[#26C2AE]">$32.79</p>
+                <p className="text-[32px] md:text-5xl text-[#26C2AE]">{"$"}{perPerson}</p>
               </div>
             </div>
             <button className="bg-[#26C2AE] text-[#00474B] w-full text-xl py-[9px] rounded-[5px]">RESET</button>
