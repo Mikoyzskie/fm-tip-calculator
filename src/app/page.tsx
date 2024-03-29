@@ -1,11 +1,41 @@
 "use client"
 
 import Image from "next/image";
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 const percents = ["5%", "10%", "15%", "25%", "50%"]
 
+
+
 export default function Home() {
+  const [custom, setCustom] = useState(0)
+  const [bill, setBill] = useState(0)
+  const [person, setPerson] = useState(0)
+  const[tipAmount, setTipAmount] = useState(0)
+  const[perPerson, setPerPerson] = useState(0)
+  function handleCustomChange(e:any){
+    const customInput = e.target.value
+    setCustom(customInput)
+  }
+  function handleBillChange(e:any){
+    const customInput = e.target.value
+    setBill(customInput)
+  }
+  function handlePersonChange(e:any){
+    const customInput = e.target.value
+    setPerson(customInput)
+  }
+
+  useEffect(()=>{
+    if(custom && bill && person){
+      const tipAmount = bill * (custom / 100)
+      const tipDistribute = tipAmount / person
+      setTipAmount(Math.floor(tipDistribute * 100) / 100)
+
+    }
+
+  },[custom,bill,person])
+  
   return (
     <main className="min-h-screen h-full px-0 sm:px-5 flex flex-col items-center justify-center">
       <div className="flex items-center h-full grow md:grow-0 md:mb-[87.86px]">
@@ -18,7 +48,6 @@ export default function Home() {
         />
       </div>
       <div className="bg-white rounded-t-[25px] md:rounded-b-[25px] shadow-2xl p-8 max-w-[920px] md:max-h-[481px] w-full mx-auto flex">
-
         <div className="flex flex-col md:flex-row gap-8 md:gap-12 h-fit">
           <div className="flex flex-col gap-8 justify-between basis-1/2">
             <div>
@@ -30,7 +59,7 @@ export default function Home() {
                   width={11}
                   height={17}
                 />
-                <input type="number" dir="rtl" className="text-[#00474B] text-2xl w-full bg-[#F3F9FA] outline-none group" placeholder="0" />
+                <input onChange={handleBillChange} type="number" dir="rtl" className="text-[#00474B] text-2xl w-full bg-[#F3F9FA] outline-none group" placeholder="0" />
               </div>
             </div>
             <div>
@@ -43,7 +72,7 @@ export default function Home() {
                     )
                   })
                 }
-                <input type="number" className="bg-[#F3F9FA] outline-none text-[#00474B] text-2xl font-bold pl-[17.33px] pr-[19px]" placeholder="Custom" dir="rtl" />
+                <input onChange={handleCustomChange} type="number" className="bg-[#F3F9FA] outline-none text-[#00474B] text-2xl font-bold pl-[17.33px] pr-[19px]" placeholder="Custom" dir="rtl" />
               </div>
             </div>
             <div>
@@ -55,7 +84,7 @@ export default function Home() {
                   width={13}
                   height={16}
                 />
-                <input type="number" min={0} placeholder="0" className="text-2xl text-[#00474B] outline-none bg-[#F3F9FA] w-full " dir="rtl" />
+                <input onChange={handlePersonChange} type="number" min={0} placeholder="0" className="text-2xl text-[#00474B] outline-none bg-[#F3F9FA] w-full " dir="rtl" />
               </div>
             </div>
           </div>
@@ -66,7 +95,7 @@ export default function Home() {
                   <p>Tip Amount</p>
                   <p className="text-[13px] text-[#7F9D9F]">/ person</p>
                 </div>
-                <p className="text-[32px] md:text-5xl text-[#26C2AE]">$4.27</p>
+                <p className="text-[32px] md:text-5xl text-[#26C2AE]">{"$"}{tipAmount}</p>
               </div>
               <div className="flex justify-between items-center">
                 <div>
