@@ -75,6 +75,12 @@ export default function Home() {
     if(personInput.current){
       personInput.current.value = ''
     }
+    setTipAmount(0)
+    setPerPerson(0)
+    setCustom(0)
+    setBill(0)
+    setPerson(0)
+    setPercent(0)
   }
   
   return (
@@ -100,7 +106,7 @@ export default function Home() {
                   width={11}
                   height={17}
                 />
-                <input onChange={handleBillChange} type="number" dir="rtl" className="text-[#00474B] text-2xl w-full bg-[#F3F9FA] outline-none group" placeholder="0" />
+                <input ref={billInput} onChange={handleBillChange} type="number" dir="rtl" className="text-[#00474B] text-2xl w-full bg-[#F3F9FA] outline-none group" placeholder="0" />
               </div>
             </div>
             <div>
@@ -117,7 +123,7 @@ export default function Home() {
                     )
                   })
                 }
-                <input onChange={handleCustomChange} type="number" className="bg-[#F3F9FA] outline-none text-[#00474B] text-2xl font-bold pl-[17.33px] pr-[19px]" placeholder="Custom" dir="rtl" />
+                <input ref={customInput} onChange={handleCustomChange} type="number" className="bg-[#F3F9FA] outline-none text-[#00474B] text-2xl font-bold pl-[17.33px] pr-[19px]" placeholder="Custom" dir="rtl" />
               </div>
             </div>
             <div>
@@ -129,7 +135,7 @@ export default function Home() {
                   width={13}
                   height={16}
                 />
-                <input onChange={handlePersonChange} type="number" min={0} placeholder="0" className="text-2xl text-[#00474B] outline-none bg-[#F3F9FA] w-full " dir="rtl" />
+                <input ref={personInput} onChange={handlePersonChange} type="number" min={0} placeholder="0" className="text-2xl text-[#00474B] outline-none bg-[#F3F9FA] w-full " dir="rtl" />
               </div>
             </div>
           </div>
