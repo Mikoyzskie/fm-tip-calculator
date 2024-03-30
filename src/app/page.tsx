@@ -1,43 +1,81 @@
 "use client"
 
 import Image from "next/image";
-import { useEffect, useState } from "react"
-
-const percents = ["5%", "10%", "15%", "25%", "50%"]
-
-
+import { useEffect, useState, useRef } from "react"
+import clsx from "clsx"
 
 export default function Home() {
+  const percents: number[] = [5, 10, 15, 25, 50]
   const [custom, setCustom] = useState<number>(0)
   const [bill, setBill] = useState<number>(0)
   const [person, setPerson] = useState<number>(0)
   const[tipAmount, setTipAmount] = useState<number>(0)
   const[perPerson, setPerPerson] = useState<number>(0)
+
+  const billInput = useRef<HTMLInputElement>(null)
+  const customInput = useRef<HTMLInputElement>(null)
+  const personInput = useRef<HTMLInputElement>(null)
+
+  const [percent, setPercent] = useState(0)
+
   function handleCustomChange(e:any){
-    const customInput = e.target.value
+    const customInput:number = parseInt(e.target.value)
     setCustom(customInput)
   }
   function handleBillChange(e:any){
-    const customInput = e.target.value
+    const customInput:number = parseInt(e.target.value)
     setBill(customInput)
   }
   function handlePersonChange(e:any){
-    const customInput = e.target.value
+    const customInput:number = parseInt(e.target.value)
     setPerson(customInput)
   }
 
   useEffect(()=>{
-    if(custom && bill && person){
-      const tip = custom / 100      
-      const tipAmount = bill * tip
-      const tipDistribute = tipAmount / person
-      const total = parseFloat(bill) + parseFloat(tipAmount)
-      const totalDistributed = total / person
-      setTipAmount(Math.floor(tipDistribute * 100) / 100)
-      setPerPerson(Math.floor(total * 100) / 100)
+
+    let percentages:number = 0
+    if(custom || percent){
+      if(custom){
+        percentages = custom
+      }
+      if(percent){
+        percentages = percent
+      }
+    }else{
+      setTipAmount(0)
+      setPerPerson(0)
     }
 
-  },[custom,bill,person])
+    if(percentages && bill && person){
+      const tip = percentages / 100      
+      const tipAmount = bill * tip
+      const tipDistribute = tipAmount / person
+      const total = bill + tipAmount
+      const totalDistributed = total / person
+      setTipAmount(Math.floor(tipDistribute * 100) / 100)
+      setPerPerson(Math.floor(totalDistributed * 100) / 100)
+    }
+
+  },[custom,bill,person, percent])
+
+  function getPercent(percents: number){
+    if(percent === percents){
+      setPercent(0)
+    }else{
+      setPercent(percents)
+    }
+  }
+  function reset(){
+    if(billInput.current){
+      billInput.current.value = ''
+    }
+    if(customInput.current){
+      customInput.current.value = ''
+    }
+    if(personInput.current){
+      personInput.current.value = ''
+    }
+  }
   
   return (
     <main className="min-h-screen h-full px-0 sm:px-5 flex flex-col items-center justify-center">
@@ -69,9 +107,13 @@ export default function Home() {
               <p className="text-[#5E7A7D] mb-[16px]">Select Tip %</p>
               <div className="grid grid-cols-2 md:grid-cols-3 gap-4 text-2xl leading-9">
                 {
-                  percents.map((per: string, index: number) => {
+                  percents.map((per: number, index: number) => {
                     return (
-                      <button key={index} className="bg-[#00474B] text-white py-[6px] rounded-[5px] hover:bg-[#26C2AE] hover:text-[#00474B]">{per}</button>
+                      <button onClick={()=>{getPercent(per)}} key={index} className={clsx("py-[6px] rounded-[5px] hover:bg-[#26C2AE] hover:text-[#00474B]",
+                        percent === per ? "bg-[#26C2AE] text-[#00474B]" : "bg-[#00474B] text-white" 
+                      )}>
+                        {`${per}`}{"%"}
+                      </button>
                     )
                   })
                 }
@@ -108,7 +150,7 @@ export default function Home() {
                 <p className="text-[32px] md:text-5xl text-[#26C2AE]">{"$"}{perPerson}</p>
               </div>
             </div>
-            <button className="bg-[#26C2AE] text-[#00474B] w-full text-xl py-[9px] rounded-[5px]">RESET</button>
+            <button onClick={reset} className="bg-[#26C2AE] text-[#00474B] w-full text-xl py-[9px] rounded-[5px]">RESET</button>
           </div>
         </div>
       </div>
