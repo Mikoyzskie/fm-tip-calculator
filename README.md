@@ -35,7 +35,7 @@ Users should be able to:
 ### Links
 
 - Solution URL: [Github](https://github.com/Mikoyzskie/fm-tip-calculator)
-- Live Site URL: [Vercel](https://your-live-site-url.com)
+- Live Site URL: [Vercel](https://fm-tip-calculator-xi.vercel.app/)
 
 ## My process
 
